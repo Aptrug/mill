@@ -87,6 +87,10 @@ update.xml: $(foreach e,$(EXTENSIONS),$e/$e.crx)
 install: $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml
 	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)/update.xml $(foreach e,$(EXTENSIONS),$(ext_id_$e))
 
+.PHONY: uninstall
+uninstall:
+	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)/update.xml
+
 # -- Policy helper -----------------------------------------------------------
 # Prints one "<id>;<update_url>" line per extension, ready to paste into
 # the Brave managed policy JSON ExtensionInstallForcelist array.
