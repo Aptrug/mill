@@ -4,5 +4,8 @@
 	"BraveAIChatEnabled": 0,
 	"TorDisabled": 1,
 	"BraveNewsDisabled": 1,
-	"BraveTalkDisabled": 1
+	"BraveTalkDisabled": 1,
+	"ExtensionInstallForcelist": [
+		"ahlpilmmpeffcnkhjfiloacmddpoeiib;https://raw.githubusercontent.com/Aptrug/mill/master/update.xml"
+	]
 }
