@@ -11,8 +11,6 @@ MAKEFLAGS += --no-builtin-rules --no-builtin-variables
 # -- Tools -------------------------------------------------------------------
 CHROMIUM_BIN := google-chrome-stable
 
-.ONESHELL:
-
 # -- User-facing config ------------------------------------------------------
 REPO_URL := https://raw.githubusercontent.com/Aptrug/mill/master
 
@@ -50,8 +48,8 @@ all: $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml
 # of src/, both are moved into place.
 define pem_rule
 $1/$1.pem:
-	$(CHROMIUM_BIN) --headless --pack-extension="$1/src" &&
-	mv "$1/src.crx" "$1/$1.crx" &&
+	$(CHROMIUM_BIN) --headless --pack-extension="$1/src" && \
+	mv "$1/src.crx" "$1/$1.crx" && \
 	mv "$1/src.pem" "$$@"
 endef
 
@@ -87,8 +85,15 @@ update.xml: $(foreach e,$(EXTENSIONS),$e/$e.crx)
 # git push origin master
 .PHONY: install
 install: $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml
-	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)/update.xml $(foreach e,$(EXTENSIONS),$(ext_id_$e))
-	$(CHROMIUM_BIN) & sleep 1; pkill -x $(CHROMIUM_BIN)
+	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)/update.xml
+	pkill -w google-chrome-stable || true
+	google-chrome-stable &
+	git add $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml && \
+	git commit -m "release: $(foreach e,$(EXTENSIONS),$e $(version_$e))" && \
+	git push origin master
+	pkill -w google-chrome-stable || true
+	sudo python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)/update.xml $(foreach e,$(EXTENSIONS),$(ext_id_$e))
+	google-chrome-stable &
 
 .PHONY: uninstall
 uninstall:
