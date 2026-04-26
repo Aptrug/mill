@@ -64,7 +64,6 @@ $(foreach e,$(EXTENSIONS),$(eval $(call crx_rule,$e)))
 
 
 # Syncs mill-owned extension entries into SETTINGS_JSON.
-# Requires sudo if the file is owned by root.
 
 .PHONY: install
 install: $(foreach e,$(EXTENSIONS),$e/$e.crx)
