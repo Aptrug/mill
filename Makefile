@@ -48,6 +48,7 @@ $1/$1.pem:
 	$(CHROMIUM_BIN) --headless --pack-extension="$1/src"
 	mv "$1/src.crx" "$1/$1.crx"
 	mv "$1/src.pem" "$$@"
+	touch "$1/$1.crx"
 endef
 
 # crx_rule <name>: rebuild .crx when source files or .pem change.
