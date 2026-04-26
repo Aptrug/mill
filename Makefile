@@ -85,13 +85,13 @@ update.xml: $(foreach e,$(EXTENSIONS),$e/$e.crx)
 # git push origin master
 .PHONY: install
 install: $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml
-	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)/update.xml && \
+	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)/update.xml; \
 	$(CHROMIUM_BIN) & \
 	PID=$$!; \
 	git add $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml && \
 	git commit -m "release: $(foreach e,$(EXTENSIONS),$e $(version_$e))"; \
 	EXIT_CODE=$$?
-	kill $$PID || true && \
+	kill $$PID; \
 	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)/update.xml $(foreach e,$(EXTENSIONS),$(ext_id_$e)) && \
 	[ $$EXIT_CODE -eq 0 ] && git push origin master && \
 	$(CHROMIUM_BIN) &
