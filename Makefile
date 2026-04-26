@@ -96,7 +96,7 @@ install: $(foreach e,$(EXTENSIONS),$e/$e.crx)
 # git commit -m "release: $(foreach e,$(EXTENSIONS),$e $(version_$e))" ;\
 # git push origin master
 .PHONY: run
-run: $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml
+run: install
 	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)/update.xml
 	pkill -x $(CHROMIUM_PROCESS)
 	$(CHROMIUM_BIN) &
