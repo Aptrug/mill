@@ -5,10 +5,9 @@
 
 import sys, json, shutil
 
-MILL_URL = "https://raw.githubusercontent.com/Aptrug/mill/master/update.xml"
-
 settings_path = sys.argv[1]
-desired_ids   = sys.argv[2:]
+MILL_URL      = sys.argv[2]
+desired_ids   = sys.argv[3:]
 
 with open(settings_path) as f:
     data = json.load(f)
