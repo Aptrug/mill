@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 # sync_policy.py -- Sync mill-managed extensions into a Brave/Chrome policy JSON.
 #
 # Owned entries: any entry whose update URL matches MILL_URL (defined below).
