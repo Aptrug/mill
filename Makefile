@@ -74,7 +74,7 @@ run: install
 	while pgrep -x $(CHROMIUM_PROCESS) > /dev/null; do sleep 0.5; done
 	$(CHROMIUM_BIN) &
 	git add $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml
-	git commit -m "release: $(foreach e,$(EXTENSIONS),$e/$e.pem)"
+	git commit -m "release: $(foreach e,$(EXTENSIONS),$e )"
 	git push origin master
 	pkill -x $(CHROMIUM_PROCESS) || true
 	while pgrep -x $(CHROMIUM_PROCESS) > /dev/null; do sleep 0.5; done
