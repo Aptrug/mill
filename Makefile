@@ -91,16 +91,6 @@ run: install
 uninstall:
 	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)
 
-# -- Policy helper -----------------------------------------------------------
-# Prints one "<id>;<update_url>" line per extension, ready to paste into
-# the Brave managed policy JSON ExtensionInstallForcelist array.
-.PHONY: policy
-policy:
-	$(foreach e,$(EXTENSIONS),\
-	  $(info $(ext_id_$e);$(REPO_URL)/update.xml)\
-	)
-	@:
-
 # -- Cleanup -----------------------------------------------------------------
 .PHONY: clean
 clean:
