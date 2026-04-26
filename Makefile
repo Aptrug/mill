@@ -11,6 +11,8 @@ MAKEFLAGS += --no-builtin-rules --no-builtin-variables
 # -- Tools -------------------------------------------------------------------
 CHROMIUM_BIN := google-chrome-stable
 
+.ONESHELL:
+
 # -- User-facing config ------------------------------------------------------
 REPO_URL := https://raw.githubusercontent.com/Aptrug/mill/master
 
@@ -86,6 +88,7 @@ update.xml: $(foreach e,$(EXTENSIONS),$e/$e.crx)
 .PHONY: install
 install: $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml
 	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)/update.xml $(foreach e,$(EXTENSIONS),$(ext_id_$e))
+	$(CHROMIUM_BIN) & sleep 1; pkill -x $(CHROMIUM_BIN)
 
 .PHONY: uninstall
 uninstall:
