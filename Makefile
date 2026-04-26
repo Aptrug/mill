@@ -34,20 +34,29 @@ $(foreach e,$(EXTENSIONS),\
 all: $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml
 
 # -- Extension build rules ---------------------------------------------------
+# Explicit rules are generated per extension via $(eval) because GNU Make
+# allows only one % wildcard per pattern -- %/%.crx would treat the second
+# % as a literal, not a wildcard, and never match.
 
-# First run: no .pem exists yet; brave generates both .pem and .crx as
-# siblings of src/ (i.e. <name>/src.pem and <name>/src.crx). Move both.
-%/%.pem:
-	$(BRAVE_BIN) --headless --pack-extension="$*/src" && \
-	mv "$*/src.crx" "$*/$*.crx" && \
-	mv "$*/src.pem" "$@"
+# pem_rule <name>: first-run rule; brave emits src.pem + src.crx as siblings
+# of src/, both are moved into place.
+define pem_rule
+$1/$1.pem:
+	$(BRAVE_BIN) --headless --pack-extension="$1/src" && \
+	mv "$1/src.crx" "$1/$1.crx" && \
+	mv "$1/src.pem" "$$@"
+endef
 
-# Subsequent runs: .pem exists; rebuild .crx from source files.
-# $$(srcs_$$*) expands after % is bound (secondary expansion).
-%/%.crx: %/%.pem $$(srcs_$$*)
-	$(BRAVE_BIN) --headless --pack-extension="$*/src" \
-	  --pack-extension-key="$<" && \
-	mv "$*/src.crx" "$@"
+# crx_rule <name>: rebuild .crx when source files or .pem change.
+define crx_rule
+$1/$1.crx: $1/$1.pem $(srcs_$1)
+	$(BRAVE_BIN) --headless --pack-extension="$1/src" \
+	  --pack-extension-key="$$<" && \
+	mv "$1/src.crx" "$$@"
+endef
+
+$(foreach e,$(EXTENSIONS),$(eval $(call pem_rule,$e)))
+$(foreach e,$(EXTENSIONS),$(eval $(call crx_rule,$e)))
 
 # -- update.xml --------------------------------------------------------------
 # Lists all extensions for Brave/Chrome policy force-install.
