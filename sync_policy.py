@@ -18,7 +18,6 @@ owned     = [f"{i};{MILL_URL}" for i in desired_ids]
 
 data["ExtensionInstallForcelist"] = non_owned + owned
 
-shutil.copy2(settings_path, settings_path + ".bak")
 with open(settings_path, "w") as f:
     json.dump(data, f, indent="\t")
     f.write("\n")
