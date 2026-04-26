@@ -1,4 +1,4 @@
-REPO_URL   := https://raw.githubusercontent.com/you/repo/main
+REPO_URL   := https://raw.githubusercontent.com/Aptrug/mill/master
 BRAVE_BIN  := brave
 EXTENSIONS := $(patsubst %/src/,%,$(wildcard */src/))
 
