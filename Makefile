@@ -2,14 +2,14 @@
 # Builds Chrome/Brave .crx extensions from src/ subdirectories.
 # Each extension lives in <name>/src/. Outputs: <name>/<name>.crx,
 # <name>/<name>.pem, and a combined update.xml for policy deployment.
-# BRAVE_BIN and REPO_URL may be overridden on the command line.
+# CHROMIUM_BIN and REPO_URL may be overridden on the command line.
 
 MAKEFLAGS += --no-builtin-rules --no-builtin-variables
 .DELETE_ON_ERROR:
 .SECONDEXPANSION:
 
 # -- Tools -------------------------------------------------------------------
-BRAVE_BIN := brave
+CHROMIUM_BIN := brave
 
 # -- User-facing config ------------------------------------------------------
 REPO_URL := https://raw.githubusercontent.com/Aptrug/mill/master
@@ -48,7 +48,7 @@ all: $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml
 # of src/, both are moved into place.
 define pem_rule
 $1/$1.pem:
-	$(BRAVE_BIN) --headless --pack-extension="$1/src" && \
+	$(CHROMIUM_BIN) --headless --pack-extension="$1/src" && \
 	mv "$1/src.crx" "$1/$1.crx" && \
 	mv "$1/src.pem" "$$@"
 endef
@@ -56,7 +56,7 @@ endef
 # crx_rule <name>: rebuild .crx when source files or .pem change.
 define crx_rule
 $1/$1.crx: $1/$1.pem $(srcs_$1)
-	$(BRAVE_BIN) --headless --pack-extension="$1/src" \
+	$(CHROMIUM_BIN) --headless --pack-extension="$1/src" \
 	  --pack-extension-key="$$<" && \
 	mv "$1/src.crx" "$$@"
 endef
