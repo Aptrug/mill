@@ -1,0 +1,23 @@
+{
+	"manifest_version": 3,
+	"name": "Focus Override",
+	"version": "1.0.0",
+	"description": "Overrides visibility and focus APIs on targeted URLs.",
+	"content_scripts": [
+		{
+			"matches": [
+				"https://gemini.google.com/*",
+				"https://claude.ai/*",
+				"https://grok.com/*"
+			],
+			"js": [
+				"content.js"
+			],
+			"run_at": "document_start",
+			"world": "MAIN"
+		}
+	],
+	"content_security_policy": {
+		"extension_pages": "script-src 'self'; object-src 'none';"
+	}
+}
