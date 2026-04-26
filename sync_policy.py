@@ -3,7 +3,7 @@
 # Syncs mill-owned entries in ExtensionInstallForcelist.
 # Owned = any entry pointing to MILL_URL. Non-owned entries are never touched.
 
-import sys, json, shutil
+import sys, json
 
 settings_path = sys.argv[1]
 MILL_URL      = sys.argv[2]
