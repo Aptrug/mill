@@ -88,7 +88,6 @@ update.xml: $(foreach e,$(EXTENSIONS),$e/$e.crx)
 install: $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml
 	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)/update.xml && \
 	pkill -x $(CHROMIUM_PROCESS) || true && \
-	while pgrep -x $(CHROMIUM_BIN) > /dev/null; do sleep 0.5; done && \
 	$(CHROMIUM_BIN) & \
 	git add $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml && \
 	git commit -m "release: $(foreach e,$(EXTENSIONS),$e $(version_$e))" && \
