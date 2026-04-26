@@ -6,7 +6,7 @@
 	"content_scripts": [
 		{
 			"matches": [
-				"https://geminigoogle.com/*",
+				"https://gemini.google.com/*",
 				"https://claude.ai/*",
 				"https://grok.com/*"
 			],
