@@ -81,7 +81,15 @@ update.xml: $(foreach e,$(EXTENSIONS),$e/$e.crx)
 # Requires sudo if the file is owned by root.
 
 .PHONY: install
-install: $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml
+install: $(foreach e,$(EXTENSIONS),$e/$e.crx)
+	$(file  > update.xml,<?xml version="1.0" encoding="UTF-8"?>)
+	$(file >> update.xml,<gupdate xmlns="http://www.google.com/update2/response" protocol="2.0">)
+	$(foreach e,$(EXTENSIONS),\
+	  $(file >> update.xml,	<app appid="$(ext_id_$e)">)\
+	  $(file >> update.xml,		<updatecheck codebase="$(REPO_URL)/$e/$e.crx" version="$(version_$e)"/>)\
+	  $(file >> update.xml,	</app>)\
+	)
+	$(file >> update.xml,</gupdate>)
 	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)/update.xml $(foreach e,$(EXTENSIONS),$(ext_id_$e))
 
 # git add $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml; \
