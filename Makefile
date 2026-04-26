@@ -78,6 +78,7 @@ policy:
 	$(foreach e,$(EXTENSIONS),\
 	  $(info $(ext_id_$e);$(REPO_URL)/update.xml)\
 	)
+	@:
 
 # -- Cleanup -----------------------------------------------------------------
 .PHONY: clean
