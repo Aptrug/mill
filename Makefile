@@ -89,7 +89,7 @@ run: install
 
 .PHONY: uninstall
 uninstall:
-	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)/update.xml
+	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)
 
 # -- Policy helper -----------------------------------------------------------
 # Prints one "<id>;<update_url>" line per extension, ready to paste into
