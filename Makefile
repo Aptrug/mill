@@ -9,7 +9,8 @@ MAKEFLAGS += --no-builtin-rules --no-builtin-variables
 .SECONDEXPANSION:
 
 # -- Tools -------------------------------------------------------------------
-CHROMIUM_BIN := google-chrome-stable
+CHROMIUM_BIN     := google-chrome-stable
+CHROMIUM_PROCESS := $(if $(filter google-chrome-stable,$(CHROMIUM_BIN)),chrome,$(CHROMIUM_BIN))
 
 # -- User-facing config ------------------------------------------------------
 REPO_URL := https://raw.githubusercontent.com/Aptrug/mill/master
