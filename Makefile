@@ -10,6 +10,7 @@ MAKEFLAGS += --no-builtin-rules --no-builtin-variables
 
 # -- Tools -------------------------------------------------------------------
 CHROMIUM_BIN     := google-chrome-stable
+CHROMIUM_PROCESS := $(if $(filter google-chrome-stable,$(CHROMIUM_BIN)),chrome,$(CHROMIUM_BIN))
 
 # -- User-facing config ------------------------------------------------------
 REPO_URL := https://raw.githubusercontent.com/Aptrug/mill/master
@@ -85,15 +86,16 @@ update.xml: $(foreach e,$(EXTENSIONS),$e/$e.crx)
 # git push origin master
 .PHONY: install
 install: $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml
-	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)/update.xml; \
+	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)/update.xml && \
+	pkill -x $(CHROMIUM_BIN) || true && \
+	while pgrep -x $(CHROMIUM_BIN) > /dev/null; do sleep 0.5; done && \
 	$(CHROMIUM_BIN) & \
-	PID=$$!; \
 	git add $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml && \
-	git commit -m "release: $(foreach e,$(EXTENSIONS),$e $(version_$e))"; \
-	EXIT_CODE=$$?
-	kill $$PID; \
-	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)/update.xml $(foreach e,$(EXTENSIONS),$(ext_id_$e)); \
-	[ $$EXIT_CODE -eq 0 ] && git push origin master; \
+	git commit -m "release: $(foreach e,$(EXTENSIONS),$e $(version_$e))" || true && \
+	pkill -x $(CHROMIUM_BIN) || true && \
+	while pgrep -x $(CHROMIUM_BIN) > /dev/null; do sleep 0.5; done && \
+	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)/update.xml $(foreach e,$(EXTENSIONS),$(ext_id_$e)) && \
+	git push origin master && \
 	$(CHROMIUM_BIN) &
 
 .PHONY: uninstall
