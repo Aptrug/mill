@@ -39,7 +39,7 @@ $(foreach e,$(EXTENSIONS),\
 
 # -- Default goal ------------------------------------------------------------
 .PHONY: all
-all: $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml
+all: $(foreach e,$(EXTENSIONS),$e/$e.crx)
 
 # -- Extension build rules ---------------------------------------------------
 # Explicit rules are generated per extension via $(eval) because GNU Make
