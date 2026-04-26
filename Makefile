@@ -6,7 +6,6 @@
 
 MAKEFLAGS += --no-builtin-rules --no-builtin-variables
 .DELETE_ON_ERROR:
-.SECONDEXPANSION:
 .ONESHELL:
 
 # -- Tools -------------------------------------------------------------------
