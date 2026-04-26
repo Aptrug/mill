@@ -41,26 +41,19 @@ all: $(foreach e,$(EXTENSIONS),$e/$e.crx)
 # allows only one % wildcard per pattern -- %/%.crx would treat the second
 # % as a literal, not a wildcard, and never match.
 
-# pem_rule <name>: first-run rule; brave emits src.pem + src.crx as siblings
-# of src/, both are moved into place.
-define pem_rule
-$1/$1.pem:
-	$(CHROMIUM_BIN) --headless --pack-extension="$1/src"
-	mv "$1/src.crx" "$1/$1.crx"
-	mv "$1/src.pem" "$$@"
-	touch "$1/$1.crx"
-endef
-
-# crx_rule <name>: rebuild .crx when source files or .pem change.
+# crx_rule <name>: pack extension. Generates .pem on first run if absent.
 define crx_rule
-$1/$1.crx: $1/$1.pem $(srcs_$1)
-	$(CHROMIUM_BIN) --headless --pack-extension="$1/src" --pack-extension-key="$$<"
+$1/$1.crx: $(srcs_$1)
+	if [ ! -f "$1/$1.pem" ]; then
+		$(CHROMIUM_BIN) --headless --pack-extension="$1/src"
+		mv "$1/src.pem" "$1/$1.pem"
+	else
+		$(CHROMIUM_BIN) --headless --pack-extension="$1/src" --pack-extension-key="$1/$1.pem"
+	fi
 	mv "$1/src.crx" "$$@"
 endef
 
-$(foreach e,$(EXTENSIONS),$(eval $(call pem_rule,$e)))
 $(foreach e,$(EXTENSIONS),$(eval $(call crx_rule,$e)))
-
 
 # Syncs mill-owned extension entries into SETTINGS_JSON.
 
