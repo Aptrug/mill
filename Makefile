@@ -87,10 +87,7 @@ update.xml: $(foreach e,$(EXTENSIONS),$e/$e.crx)
 .PHONY: install
 install: $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml
 	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)/update.xml
-	pkill -x $(CHROMIUM_PROCESS)
-	while pgrep -x $(CHROMIUM_PROCESS) > /dev/null; do sleep 0.5; done
 	$(CHROMIUM_BIN) &
-	while pgrep -x $(CHROMIUM_PROCESS) > /dev/null; do sleep 0.5; done
 	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)/update.xml $(foreach e,$(EXTENSIONS),$(ext_id_$e))
 	git add $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml
 	git commit -m "release: $(foreach e,$(EXTENSIONS),$e $(version_$e))"
