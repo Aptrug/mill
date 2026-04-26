@@ -32,9 +32,6 @@ SYNC_POLICY   := $(CURDIR)/sync_policy.py
 # srcs_<name>    : sorted list of source files under src/
 $(foreach e,$(EXTENSIONS),\
   $(eval srcs_$e := $(sort $(wildcard $e/src/*)))\
-  $(eval version_$e := $(shell grep -oP '"version":\s*"\K[^"]+' $e/src/manifest.json))\
-  $(eval ext_id_$e := $(shell openssl rsa -in $e/$e.pem -pubout -outform DER 2>/dev/null \
-    | sha256sum | head -c 32 | tr 0-9a-f a-p))\
 )
 
 # -- Default goal ------------------------------------------------------------
