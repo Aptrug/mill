@@ -9,7 +9,7 @@ MAKEFLAGS += --no-builtin-rules --no-builtin-variables
 .SECONDEXPANSION:
 
 # -- Tools -------------------------------------------------------------------
-CHROMIUM_BIN := brave
+CHROMIUM_BIN := google-chrome
 
 # -- User-facing config ------------------------------------------------------
 REPO_URL := https://raw.githubusercontent.com/Aptrug/mill/master
