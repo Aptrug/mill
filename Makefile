@@ -50,8 +50,8 @@ all: $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml
 # of src/, both are moved into place.
 define pem_rule
 $1/$1.pem:
-	$(CHROMIUM_BIN) --headless --pack-extension="$1/src" && \
-	mv "$1/src.crx" "$1/$1.crx" && \
+	$(CHROMIUM_BIN) --headless --pack-extension="$1/src" &&
+	mv "$1/src.crx" "$1/$1.crx" &&
 	mv "$1/src.pem" "$$@"
 endef
 
