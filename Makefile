@@ -58,8 +58,7 @@ endef
 # crx_rule <name>: rebuild .crx when source files or .pem change.
 define crx_rule
 $1/$1.crx: $1/$1.pem $(srcs_$1)
-	$(CHROMIUM_BIN) --headless --pack-extension="$1/src" \
-	  --pack-extension-key="$$<" && \
+	$(CHROMIUM_BIN) --headless --pack-extension="$1/src" --pack-extension-key="$$<"
 	mv "$1/src.crx" "$$@"
 endef
 
