@@ -41,6 +41,11 @@ update.xml: $(foreach e,$(EXTENSIONS),$(call crx,$e))
 		"$(call version,$e)" >> update.xml;)
 	@printf '</gupdate>\n'                                                        >> update.xml
 
+.PHONY: policy
+policy:
+	@$(foreach e,$(EXTENSIONS), \
+		echo "$(call ext_id,$e);$(REPO_URL)/update.xml";)
+
 .PHONY: clean
 clean:
 	@$(foreach e,$(EXTENSIONS), rm -f $(call crx,$e);)
