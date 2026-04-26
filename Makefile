@@ -10,7 +10,6 @@ MAKEFLAGS += --no-builtin-rules --no-builtin-variables
 
 # -- Tools -------------------------------------------------------------------
 CHROMIUM_BIN     := google-chrome-stable
-CHROMIUM_PROCESS := $(if $(filter google-chrome-stable,$(CHROMIUM_BIN)),chrome,$(CHROMIUM_BIN))
 
 # -- User-facing config ------------------------------------------------------
 REPO_URL := https://raw.githubusercontent.com/Aptrug/mill/master
@@ -91,7 +90,7 @@ install: $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml
 	PID=$$!; \
 	git add $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml && \
 	git commit -m "release: $(foreach e,$(EXTENSIONS),$e $(version_$e))" && \
-	kill -9 $$PID || true && \
+	kill $$PID || true && \
 	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)/update.xml $(foreach e,$(EXTENSIONS),$(ext_id_$e)) && \
 	git push origin master && \
 	$(CHROMIUM_BIN) &
