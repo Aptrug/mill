@@ -8,6 +8,9 @@
 		"scripting",
 		"clipboardRead"
 	],
+	"host_permissions": [
+		"https://claude.ai/*"
+	],
 	"background": {
 		"service_worker": "background.js"
 	},
