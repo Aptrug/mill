@@ -4,6 +4,6 @@
 		<updatecheck codebase="https://raw.githubusercontent.com/Aptrug/mill/master/AlwaysFocused/AlwaysFocused.crx" version="1.2.0"/>
 	</app>
 	<app appid="jdgbekpalibkgopmlmlnboeoljanpphj">
-		<updatecheck codebase="https://raw.githubusercontent.com/Aptrug/mill/master/ClaudePaster/ClaudePaster.crx" version="1.0"/>
+		<updatecheck codebase="https://raw.githubusercontent.com/Aptrug/mill/master/ClaudePaster/ClaudePaster.crx" version="1.1"/>
 	</app>
 </gupdate>
