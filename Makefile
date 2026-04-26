@@ -19,7 +19,7 @@ REPO_URL := https://raw.githubusercontent.com/Aptrug/mill/master
 EXTENSIONS := $(patsubst %/src/,%,$(wildcard */src/))
 
 # Path to the managed policy JSON (may be a symlink).
-SETTINGS_JSON := $(CURDIR)/$(CHROMIUM_BIN)_settings.json
+SETTINGS_JSON := $(CURDIR)/$(CHROMIUM_BIN)-settings.json
 
 # Path to the sync script.
 SYNC_POLICY   := $(CURDIR)/sync_policy.py
