@@ -80,7 +80,7 @@ update.xml: $(foreach e,$(EXTENSIONS),$e/$e.crx)
 # Requires sudo if the file is owned by root.
 .PHONY: install
 install: $(foreach e,$(EXTENSIONS),$e/$e.crx)
-	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(foreach e,$(EXTENSIONS),$(ext_id_$e))
+	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)/update.xml $(foreach e,$(EXTENSIONS),$(ext_id_$e))
 
 # -- Policy helper -----------------------------------------------------------
 # Prints one "<id>;<update_url>" line per extension, ready to paste into
