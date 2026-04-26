@@ -70,9 +70,9 @@ update.xml: $(foreach e,$(EXTENSIONS),$e/$e.crx)
 	$(file  > $@,<?xml version="1.0" encoding="UTF-8"?>)
 	$(file >> $@,<gupdate xmlns="http://www.google.com/update2/response" protocol="2.0">)
 	$(foreach e,$(EXTENSIONS),\
-	  $(file >> $@,  <app appid="$(ext_id_$e)">)\
-	  $(file >> $@,    <updatecheck codebase="$(REPO_URL)/$e/$e.crx" version="$(version_$e)"/>)\
-	  $(file >> $@,  </app>)\
+	  $(file >> $@,	<app appid="$(ext_id_$e)">)\
+	  $(file >> $@,		<updatecheck codebase="$(REPO_URL)/$e/$e.crx" version="$(version_$e)"/>)\
+	  $(file >> $@,	</app>)\
 	)
 	$(file >> $@,</gupdate>)
 
