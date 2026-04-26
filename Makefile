@@ -18,6 +18,11 @@ REPO_URL := https://raw.githubusercontent.com/Aptrug/mill/master
 # All directories containing a src/ subdirectory are treated as extensions.
 EXTENSIONS := $(patsubst %/src/,%,$(wildcard */src/))
 
+# Path to the managed policy JSON (may be a symlink).
+SETTINGS_JSON := $(CURDIR)/settings.json
+# Path to the sync script.
+SYNC_POLICY   := $(CURDIR)/sync_policy.py
+
 # -- Per-extension derived variables (computed once at parse time) ------------
 # ext_id_<name>  : Chromium extension ID derived from the packed public key
 # version_<name> : version string extracted from src/manifest.json
