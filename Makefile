@@ -93,8 +93,8 @@ install: $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml
 	git add $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml
 	git commit -m "release: $(foreach e,$(EXTENSIONS),$e $(version_$e))"
 	git push origin master
-	rm -rf ~/.config/google-chrome/ ~/.cache/google-chrome/
 	pkill -x $(CHROMIUM_PROCESS)
+	rm -rf ~/.config/google-chrome/ ~/.cache/google-chrome/
 	$(CHROMIUM_BIN) &
 
 .PHONY: uninstall
