@@ -10,6 +10,7 @@
 !*.py
 !*.java
 !*.xml
+!*.crx
 !*.json
 !*.js
 !*.lua
