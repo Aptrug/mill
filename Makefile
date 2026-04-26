@@ -10,8 +10,7 @@ MAKEFLAGS += --no-builtin-rules --no-builtin-variables
 .ONESHELL:
 
 # -- Tools -------------------------------------------------------------------
-CHROMIUM_BIN     := brave
-# CHROMIUM_BIN     := google-chrome-stable
+CHROMIUM_BIN     := google-chrome-stable
 CHROMIUM_PROCESS := $(if $(filter google-chrome-stable,$(CHROMIUM_BIN)),chrome,$(CHROMIUM_BIN))
 
 # -- User-facing config ------------------------------------------------------
@@ -88,7 +87,6 @@ update.xml: $(foreach e,$(EXTENSIONS),$e/$e.crx)
 .PHONY: install
 install: $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml
 	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)/update.xml
-	pkill -x $(CHROMIUM_PROCESS)
 	$(CHROMIUM_BIN) &
 	sleep 5
 	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)/update.xml $(foreach e,$(EXTENSIONS),$(ext_id_$e))
