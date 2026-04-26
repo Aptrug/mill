@@ -27,8 +27,6 @@ SETTINGS_JSON := $(CURDIR)/$(CHROMIUM_BIN)-settings.json
 SYNC_POLICY   := $(CURDIR)/sync_policy.py
 
 # -- Per-extension derived variables (computed once at parse time) ------------
-# ext_id_<name>  : Chromium extension ID derived from the packed public key
-# version_<name> : version string extracted from src/manifest.json
 # srcs_<name>    : sorted list of source files under src/
 $(foreach e,$(EXTENSIONS),\
   $(eval srcs_$e := $(sort $(wildcard $e/src/*)))\
