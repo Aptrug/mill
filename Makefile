@@ -20,6 +20,7 @@ EXTENSIONS := $(patsubst %/src/,%,$(wildcard */src/))
 
 # Path to the managed policy JSON (may be a symlink).
 SETTINGS_JSON := $(CURDIR)/settings.json
+
 # Path to the sync script.
 SYNC_POLICY   := $(CURDIR)/sync_policy.py
 
