@@ -86,8 +86,8 @@ update.xml: $(foreach e,$(EXTENSIONS),$e/$e.crx)
 .PHONY: install
 install: $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml
 	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)/update.xml
-	pkill -w google-chrome-stable || true
-	google-chrome-stable &
+	pkill -x $(CHROMIUM_BIN); \
+	$(CHROMIUM_BIN) &
 	git add $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml && \
 	git commit -m "release: $(foreach e,$(EXTENSIONS),$e $(version_$e))" && \
 	git push origin master
