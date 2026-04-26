@@ -87,11 +87,11 @@ update.xml: $(foreach e,$(EXTENSIONS),$e/$e.crx)
 .PHONY: install
 install: $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml
 	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)/update.xml && \
-	pkill -x $(CHROMIUM_PROCESS) || true && \
 	$(CHROMIUM_BIN) & \
+	PID=$$!; \
 	git add $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml && \
 	git commit -m "release: $(foreach e,$(EXTENSIONS),$e $(version_$e))" && \
-	pkill -x $(CHROMIUM_PROCESS) || true && \
+	kill $(CHROMIUM_PROCESS) || true && \
 	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)/update.xml $(foreach e,$(EXTENSIONS),$(ext_id_$e)) && \
 	git push origin master && \
 	$(CHROMIUM_BIN) &
