@@ -79,8 +79,11 @@ update.xml: $(foreach e,$(EXTENSIONS),$e/$e.crx)
 # Syncs mill-owned extension entries into SETTINGS_JSON.
 # Requires sudo if the file is owned by root.
 .PHONY: install
-install: $(foreach e,$(EXTENSIONS),$e/$e.crx)
-	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)/update.xml $(foreach e,$(EXTENSIONS),$(ext_id_$e))
+install: $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml
+	sudo python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)/update.xml $(foreach e,$(EXTENSIONS),$(ext_id_$e)); \
+	git add $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml; \
+	git commit -m "release: $(foreach e,$(EXTENSIONS),$e $(version_$e))" ;\
+	git push origin master
 
 # -- Policy helper -----------------------------------------------------------
 # Prints one "<id>;<update_url>" line per extension, ready to paste into
