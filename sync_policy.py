@@ -1,7 +1,4 @@
-#!/usr/bin/env python3
-# sync_policy.py <settings.json> <ext_id> [<ext_id> ...]
-# Syncs mill-owned entries in ExtensionInstallForcelist.
-# Owned = any entry pointing to MILL_URL. Non-owned entries are never touched.
+#!/usr/bin/python3
 
 import sys, json
 
