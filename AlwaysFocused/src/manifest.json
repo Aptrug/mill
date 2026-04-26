@@ -7,7 +7,7 @@
 		{
 			"matches": [
 				"https://gemini.google.com/*",
-				"https://claude.ai/*",
+				"*claude*",
 				"https://grok.com/*"
 			],
 			"js": [
