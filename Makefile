@@ -86,7 +86,6 @@ update.xml: $(foreach e,$(EXTENSIONS),$e/$e.crx)
 # git push origin master
 .PHONY: install
 install: $(foreach e,$(EXTENSIONS),$e/$e.crx) update.xml
-	set -e
 	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)/update.xml
 	pkill -x $(CHROMIUM_PROCESS) || true
 	while pgrep -x $(CHROMIUM_PROCESS) > /dev/null; do sleep 0.5; done
