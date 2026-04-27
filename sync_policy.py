@@ -11,7 +11,7 @@ repo_url      = sys.argv[2]
 pem_paths     = sys.argv[3:]
 mill_url      = f"{repo_url}/update.xml"
 
-# ── Minimal DER/ASN.1 helpers (no external deps) ────────────────────────────
+# -- Minimal DER/ASN.1 helpers (no external deps) ----------------------------
 
 def _pem_to_der(pem_path):
     with open(pem_path) as f:
@@ -78,7 +78,7 @@ def pub_key_der(pem_path):
         _, rsa_body, _ = _parse_tlv(items[2][1])        # unwrap OCTET STRING
         return _spki_from_rsa_priv_body(rsa_body)
 
-# ── Extension metadata ───────────────────────────────────────────────────────
+# -- Extension metadata -------------------------------------------------------
 
 def ext_id(pem_path):
     h = hashlib.sha256(pub_key_der(pem_path)).hexdigest()
