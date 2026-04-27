@@ -4,6 +4,8 @@
 # <name>/<name>.pem, and a combined update.xml for policy deployment.
 # CHROMIUM_BIN and REPO_URL may be overridden on the command line.
 
+MAKEFLAGS += --no-builtin-rules --no-builtin-variables
+.DELETE_ON_ERROR:
 .ONESHELL:
 
 # -- Tools -------------------------------------------------------------------
