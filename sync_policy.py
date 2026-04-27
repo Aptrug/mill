@@ -68,7 +68,7 @@ def pub_key_der(pem_path):
 	der = _pem_to_der(pem_path)
 	with open(pem_path) as f:
 		header = f.readline().strip()
-	_, body, _ = _parse_tlv(der)						# strip outer SEQUENCE
+	_, body, _ = _parse_tlv(der)		# strip outer SEQUENCE
 	if 'RSA' in header:
 		# PKCS#1: RSAPrivateKey directly
 		return _spki_from_rsa_priv_body(body)
