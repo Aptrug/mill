@@ -83,6 +83,10 @@ uninstall:
 clean:
 	rm -f $(foreach e,$(EXTENSIONS),$e/$e.crx)
 
+.PHONY: pack
+clean:
+	tar cf Makefile *.json *.py *.xml */src/*
+
 # Removes .pem files and update.xml in addition to clean. WARNING: losing
 # a .pem means losing the extension's identity -- it cannot be republished
 # under the same ID.
