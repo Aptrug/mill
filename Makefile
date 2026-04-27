@@ -82,14 +82,6 @@ clean:
 uninstall:
 	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)
 
-# -- Cleanup -----------------------------------------------------------------
-.PHONY: clean
-clean:
-	rm -f $(foreach e,$(EXTENSIONS),$e/$e.crx)
-
-# Removes .pem files and update.xml in addition to clean. WARNING: losing
-# a .pem means losing the extension's identity -- it cannot be republished
-# under the same ID.
 .PHONY: distclean
 distclean: clean
 	rm -f $(foreach e,$(EXTENSIONS),$e/$e.pem) update.xml
