@@ -7,9 +7,9 @@
 import sys, json, base64, hashlib, os
 
 settings_path = sys.argv[1]
-repo_url	  = sys.argv[2]
-pem_paths	  = sys.argv[3:]
-mill_url	  = f"{repo_url}/update.xml"
+repo_url = sys.argv[2]
+pem_paths = sys.argv[3:]
+mill_url = f"{repo_url}/update.xml"
 
 # -- Minimal DER/ASN.1 helpers (no external deps) ----------------------------
 
