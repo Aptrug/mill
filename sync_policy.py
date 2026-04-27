@@ -73,7 +73,7 @@ def pub_key_der(pem_path):
         # PKCS#1: RSAPrivateKey directly
         return _spki_from_rsa_priv_body(body)
     else:
-        # PKCS#8: PrivateKeyInfo — [version, alg, OCTET STRING(RSAPrivateKey)]
+        # PKCS#8: PrivateKeyInfo -- [version, alg, OCTET STRING(RSAPrivateKey)]
         items     = list(_iter_seq(body))
         _, rsa_body, _ = _parse_tlv(items[2][1])        # unwrap OCTET STRING
         return _spki_from_rsa_priv_body(rsa_body)
