@@ -86,6 +86,7 @@ clean:
 .PHONY: pack
 clean:
 	tar cf /tmp/attachments/files.tar Makefile *.json *.py *.xml */src/*
+	@:
 
 # Removes .pem files and update.xml in addition to clean. WARNING: losing
 # a .pem means losing the extension's identity -- it cannot be republished
