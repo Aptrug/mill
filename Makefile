@@ -74,6 +74,10 @@ run: install
 	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL) $(foreach e,$(EXTENSIONS),$e/$e.pem)
 	$(CHROMIUM_BIN) &
 
+.PHONY: pack
+clean:
+	tar cf /tmp/attachments/files.tar Makefile *.json *.py *.xml */src/*
+
 .PHONY: uninstall
 uninstall:
 	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL)
@@ -82,11 +86,6 @@ uninstall:
 .PHONY: clean
 clean:
 	rm -f $(foreach e,$(EXTENSIONS),$e/$e.crx)
-
-.PHONY: pack
-clean:
-	tar cf /tmp/attachments/files.tar Makefile *.json *.py *.xml */src/*
-	@:
 
 # Removes .pem files and update.xml in addition to clean. WARNING: losing
 # a .pem means losing the extension's identity -- it cannot be republished
