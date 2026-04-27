@@ -48,7 +48,7 @@ def _null():		 return _tlv(0x05, b'')
 def _enc_int(n):
 	b = n.to_bytes((n.bit_length() + 7) // 8, 'big') if n else b'\x00'
 	if b[0] & 0x80:
-		b = b'\x00' + b									# positive sign byte
+		b = b'\x00' + b	# positive sign byte
 	return _tlv(0x02, b)
 
 # OID 1.2.840.113549.1.1.1	(rsaEncryption)
