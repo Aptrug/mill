@@ -1,0 +1,33 @@
+{
+	"manifest_version": 3,
+	"name": "FeedWatcher",
+	"version": "1.0",
+	"background": {
+		"service_worker": "sw.js"
+	},
+	"action": {
+		"default_icon": "icon_off.png",
+		"default_title": "FeedWatcher"
+	},
+	"permissions": [
+		"offscreen",
+		"notifications",
+		"tabs"
+	],
+	"content_scripts": [
+		{
+			"matches": [
+				"https://x.com/1337FIL*",
+				"https://x.com/TechInsider*",
+				"https://x.com/TheVerge*",
+				"https://www.facebook.com/1337FutureIsLoading*",
+				"https://www.facebook.com/TechInsider*",
+				"https://www.facebook.com/TheVerge*"
+			],
+			"js": [
+				"content.js"
+			],
+			"run_at": "document_idle"
+		}
+	]
+}
