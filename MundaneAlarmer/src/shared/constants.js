@@ -1,10 +1,10 @@
-/** Message type: offscreen → SW, playback completed without error. */
+/** Message type: offscreen -> SW, playback completed without error. */
 export const MSG_AUDIO_DONE = "AUDIO_DONE";
 
-/** Message type: offscreen → SW, playback failed. */
+/** Message type: offscreen -> SW, playback failed. */
 export const MSG_AUDIO_ERROR = "AUDIO_ERROR";
 
-/** Message type: SW → offscreen, abort playback immediately. */
+/** Message type: SW -> offscreen, abort playback immediately. */
 export const MSG_STOP_AUDIO = "STOP_AUDIO";
 
 /** Extension-relative path to the bundled audio asset. */
