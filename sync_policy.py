@@ -101,8 +101,10 @@ else:
 	install_pems = pem_paths
 	all_pems = pem_paths
 
-extensions_all		= [{"name": ext_name(p), "id": ext_id(p), "version": ext_version(p)} for p in all_pems]
-extensions_install	= [{"name": ext_name(p), "id": ext_id(p), "version": ext_version(p)} for p in install_pems]
+extensions_all		= [{"name": ext_name(p), "id": ext_id(p),
+				"version": ext_version(p)} for p in all_pems]
+extensions_install	= [{"name": ext_name(p), "id": ext_id(p),
+				"version": ext_version(p)} for p in install_pems]
 
 # -- update.xml --------------------------------------------------------------
 xml_lines = ['<?xml version="1.0" encoding="UTF-8"?>',
