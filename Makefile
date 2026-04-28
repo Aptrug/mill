@@ -77,7 +77,9 @@ run: install
 
 .PHONY: pack
 pack:
-	tar cf /tmp/attachments/files.tar Makefile *.json *.py *.xml */src/*
+	[ -d "$${ATTACHMENTS_DIR}" ] || exit
+	rm -rf "$${ATTACHMENTS_DIR}"/*
+	tar cf $${ATTACHMENTS_DIR}/files.tar Makefile *.json *.py *.xml */src/*
 
 .PHONY: uninstall
 uninstall:
