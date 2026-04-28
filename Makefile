@@ -74,7 +74,8 @@ run: install
 	git push origin master
 	pkill -x $(CHROMIUM_PROCESS) || true
 	while pgrep -x $(CHROMIUM_PROCESS) > /dev/null; do sleep 0.5; done
-	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL) $(foreach e,$(EXTENSIONS),$e/$e.pem)
+	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL) \
+		$(foreach e,$(EXTENSIONS),$e/$e.pem) -- $(foreach e,$(ALL_EXTENSIONS),$e/$e.pem)
 	$(CHROMIUM_BIN) &
 
 .PHONY: pack
