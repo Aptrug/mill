@@ -45,11 +45,13 @@ async function handleClick() {
 	}
 
 	// chrome.notifications routes through the OS notification center and
-	// surfaces even when Chrome is minimized.
-	await chrome.notifications.create({
+	// surfaces even when Chrome is minimized. requireInteraction keeps it
+	// visible until the user explicitly dismisses it.
+	await chrome.notifications.create(NOTIFICATION_ID, {
 		type : "basic",
 		iconUrl : chrome.runtime.getURL("icons/icon128.png"),
 		title : "Audio Notifier",
 		message : "Playing notification sound.",
+		requireInteraction : true,
 	});
 }
