@@ -31,6 +31,21 @@ chrome.notifications.onClosed.addListener((notificationId, byUser) => {
 	stopAudioAndCloseDocument().catch(() => {});
 });
 
+/**
+ * Sends MSG_STOP_AUDIO to the offscreen document (if alive) then closes it.
+ * Called when the user dismisses the notification while audio may still play.
+ * @returns {Promise<void>}
+ */
+async function stopAudioAndCloseDocument() {
+	const hasDoc = await chrome.offscreen.hasDocument();
+	if (!hasDoc)
+		return;
+	// Best-effort: the document may have already completed and been closed
+	// between the onClosed event and this await. Swallow channel errors.
+	await chrome.runtime.sendMessage({type : MSG_STOP_AUDIO}).catch(() => {});
+	await chrome.offscreen.closeDocument().catch(() => {});
+}
+
 /** @returns {Promise<void>} */
 async function handleClick() {
 	const hasDoc = await chrome.offscreen.hasDocument();
