@@ -60,7 +60,8 @@ $(foreach e,$(EXTENSIONS),$(eval $(call crx_rule,$e)))
 
 .PHONY: install
 install: $(foreach e,$(EXTENSIONS),$e/$e.crx)
-	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL) $(foreach e,$(EXTENSIONS),$e/$e.pem)
+	python3 $(SYNC_POLICY) $(SETTINGS_JSON) $(REPO_URL) \
+	  $(foreach e,$(EXTENSIONS),$e/$e.pem) -- $(foreach e,$(ALL_EXTENSIONS),$e/$e.pem)
 
 .PHONY: run
 run: install
