@@ -92,7 +92,17 @@ def ext_version(pem_path):
 	with open(manifest) as f:
 		return json.load(f)["version"]
 
-extensions = [{"name": ext_name(p), "id": ext_id(p), "version": ext_version(p)} for p in pem_paths]
+# split args: pems before -- go to settings.json, all pems go to update.xml
+if "--" in pem_paths:
+	sep = pem_paths.index("--")
+	install_pems = pem_paths[:sep]
+	all_pems = pem_paths[sep+1:]
+else:
+	install_pems = pem_paths
+	all_pems = pem_paths
+
+extensions_all		= [{"name": ext_name(p), "id": ext_id(p), "version": ext_version(p)} for p in all_pems]
+extensions_install	= [{"name": ext_name(p), "id": ext_id(p), "version": ext_version(p)} for p in install_pems]
 
 # -- update.xml --------------------------------------------------------------
 xml_lines = ['<?xml version="1.0" encoding="UTF-8"?>',
