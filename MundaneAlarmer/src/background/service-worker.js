@@ -1,4 +1,9 @@
-import {MSG_AUDIO_DONE, MSG_AUDIO_ERROR} from "../shared/constants.js";
+import {
+	MSG_AUDIO_DONE,
+	MSG_AUDIO_ERROR,
+	MSG_STOP_AUDIO,
+	NOTIFICATION_ID,
+} from "../shared/constants.js";
 
 const OFFSCREEN_URL = "offscreen/offscreen.html";
 
