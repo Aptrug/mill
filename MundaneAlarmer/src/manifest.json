@@ -1,0 +1,22 @@
+{
+	"manifest_version": 3,
+	"name": "Audio Notifier",
+	"version": "1.0.0",
+	"description": "Plays a bundled opus file and shows a system notification on icon click.",
+	"permissions": [
+		"notifications",
+		"offscreen"
+	],
+	"background": {
+		"service_worker": "background/service-worker.js",
+		"type": "module"
+	},
+	"action": {
+		"default_icon": {
+			"128": "icons/icon128.png"
+		}
+	},
+	"icons": {
+		"128": "icons/icon128.png"
+	}
+}
