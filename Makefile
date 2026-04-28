@@ -18,7 +18,8 @@ REPO_URL := https://raw.githubusercontent.com/Aptrug/mill/master
 
 # -- Source enumeration (parse-time glob, global scope only) -----------------
 # All directories containing a src/ subdirectory are treated as extensions.
-EXTENSIONS := $(patsubst %/src/,%,$(wildcard */src/))
+ALL_EXTENSIONS := $(patsubst %/src/,%,$(wildcard */src/))
+EXTENSIONS     ?= $(ALL_EXTENSIONS)
 
 # Path to the managed policy JSON (may be a symlink).
 SETTINGS_JSON := $(CURDIR)/$(CHROMIUM_BIN)-settings.json
