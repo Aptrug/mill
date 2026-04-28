@@ -109,7 +109,7 @@ extensions_install	= [{"name": ext_name(p), "id": ext_id(p),
 # -- update.xml --------------------------------------------------------------
 xml_lines = ['<?xml version="1.0" encoding="UTF-8"?>',
 			 '<gupdate xmlns="http://www.google.com/update2/response" protocol="2.0">']
-for e in extensions:
+for e in extensions_all:
 	xml_lines.append(f'\t<app appid="{e["id"]}">')
 	xml_lines.append(f'\t\t<updatecheck codebase="{repo_url}/{e["name"]}/{e["name"]}.crx" version="{e["version"]}"/>')
 	xml_lines.append('\t</app>')
