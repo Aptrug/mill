@@ -124,7 +124,7 @@ with open(settings_path) as f:
 
 entries   = data.get("ExtensionInstallForcelist", [])
 non_owned = [e for e in entries if len(e.split(";", 1)) < 2 or e.split(";", 1)[1] != mill_url]
-owned	  = [f"{e['id']};{mill_url}" for e in extensions]
+owned	  = [f"{e['id']};{mill_url}" for e in extensions_install]
 
 data["ExtensionInstallForcelist"] = non_owned + owned
 
