@@ -23,6 +23,14 @@ chrome.runtime.onMessage.addListener((message) => {
 	return false;
 });
 
+chrome.notifications.onClosed.addListener((notificationId, byUser) => {
+	// Only act on explicit user dismissal of our notification. System-initiated
+	// closes (e.g. notification center cleared programmatically) are ignored.
+	if (!byUser || notificationId !== NOTIFICATION_ID)
+		return;
+	stopAudioAndCloseDocument().catch(() => {});
+});
+
 /** @returns {Promise<void>} */
 async function handleClick() {
 	const hasDoc = await chrome.offscreen.hasDocument();
