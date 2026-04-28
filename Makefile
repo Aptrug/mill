@@ -9,7 +9,7 @@ MAKEFLAGS += --no-builtin-rules --no-builtin-variables
 .ONESHELL:
 
 # -- Tools -------------------------------------------------------------------
-CHROMIUM_BIN     := brave
+CHROMIUM_BIN     := google-chrome-stable
 CHROMIUM_PROCESS := $(if $(filter google-chrome-stable,$(CHROMIUM_BIN)),chrome,$(CHROMIUM_BIN))
 
 # -- User-facing config ------------------------------------------------------
