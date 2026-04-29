@@ -10,8 +10,10 @@
 		"default_title": "FeedWatcher"
 	},
 	"permissions": [
+		"alarms",
 		"offscreen",
 		"notifications",
+		"storage",
 		"tabs"
 	],
 	"content_scripts": [
