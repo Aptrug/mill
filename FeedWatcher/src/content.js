@@ -45,7 +45,11 @@ const seenIds = new Set();
 
 let feedObserver = null;
 let feedContainer = null;
-let bannerObserver = null;
+
+/* True until the first initFeedMonitor call completes.  On first run
+   (no persisted seenIds) all DOM posts are treated as baseline so the
+   user is not flooded with alarms for already-visible content. */
+let firstRun = true;
 
 /* ------------------------------------------------------------------ */
 /* Post ID extraction                                                   */
