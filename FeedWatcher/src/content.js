@@ -14,8 +14,8 @@ const IS_X = HOST === "x.com";
 const PATH = location.pathname.toLowerCase().replace(/\/$/, "");
 
 /* Exact profile paths we monitor, per host. */
-const X_PATHS = new Set([ "/1337fil", "/techinsider", "/cnn" ]);
-const FB_PATHS = new Set([ "/1337futureisloading", "/techinsider", "/cnn" ]);
+const X_PATHS = new Set([ "/1337fil", "/techinsider", "/davidjharrisjr" ]);
+const FB_PATHS = new Set([ "/1337futureisloading", "/techinsider", "/davidjharrisjr" ]);
 
 if (!(IS_X ? X_PATHS : FB_PATHS).has(PATH))
 	return;
