@@ -142,12 +142,11 @@ function triggerAlarm() {
 	port.postMessage({t : MSG_NEW_POST, src : SRC});
 }
 
-/* Clicks the platform's "new posts" banner if present, causing it to
-   flush pending posts into the feed DOM for the observer to catch. */
-function clickRefreshBanner() {
-	const btn = document.querySelector(BANNER_SEL);
-	if (btn !== null)
-		btn.click();
+function persistSeen() {
+	const arr = [...seenIds ];
+	const rec = {};
+	rec[SEEN_KEY] = arr;
+	chrome.storage.session.set(rec);
 }
 
 /* ------------------------------------------------------------------ */
