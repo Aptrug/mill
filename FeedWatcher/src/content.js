@@ -234,9 +234,6 @@ function tick() {
 /* Startup polling                                                      */
 /* ------------------------------------------------------------------ */
 
-bannerObserver = new MutationObserver(onBannerMutation);
-bannerObserver.observe(document.body, {childList : true, subtree : true});
-
 tick(); /* immediate check; page may already be rendered */
 
 let initPolls = 0;
