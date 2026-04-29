@@ -2,7 +2,7 @@
 
 /* Wrapped in an IIFE so we can use top-level return to bail out on
    pages that matched the manifest prefix but are not a monitored
-   profile root (e.g. x.com/cnn/status/123). */
+   profile root (e.g. x.com/davidjharrisjr/status/123). */
 (function() {
 
 const DEBUG = false;
