@@ -99,6 +99,17 @@ function extractFBId(el) {
 			if (e > off)
 				return href.slice(off, e);
 		}
+		/* /share/p/<numeric>/ -- introduced ~2024, now common on mobile-rendered
+		   feeds served to desktop clients. */
+		idx = href.indexOf("/share/p/");
+		if (idx !== -1) {
+			const off = idx + 9; /* len("/share/p/") === 9 */
+			let e = off;
+			while (e < hlen && href.charCodeAt(e) >= 48 && href.charCodeAt(e) <= 57)
+				e++;
+			if (e > off)
+				return href.slice(off, e);
+		}
 	}
 	return null;
 }
