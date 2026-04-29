@@ -28,19 +28,24 @@ function Msg(t) {
 }
 
 function normUrl(url) {
-	return url.replace(/[?#].*$/, "").replace(/\/$/, "").toLowerCase();
+	const hlen = url.length;
+	let end = hlen;
+	for (let i = 0; i < hlen; i++) {
+		const c = url.charCodeAt(i);
+		if (c === 63 /* ? */ || c === 35 /* # */) {
+			end = i;
+			break;
+		}
+	}
+	if (end > 0 && url.charCodeAt(end - 1) === 47 /* / */)
+		end--;
+	return url.slice(0, end).toLowerCase();
 }
 
 function isMonitored(url) {
 	if (!url)
 		return false;
-	const norm = normUrl(url);
-	const n = MONITORED_NORM.length;
-	for (let i = 0; i < n; i++) {
-		if (MONITORED_NORM[i] === norm)
-			return true;
-	}
-	return false;
+	return MONITORED_SET.has(normUrl(url));
 }
 
 function checkCooldown(src) {
