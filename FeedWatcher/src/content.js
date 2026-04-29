@@ -167,6 +167,7 @@ function onMutation(mutations) {
 				if (id === null || seenIds.has(id))
 					continue;
 				seenIds.add(id);
+				persistSeen();
 				triggerAlarm();
 				return; /* one alarm per mutation batch */
 			}
@@ -178,6 +179,7 @@ function onMutation(mutations) {
 				if (id === null || seenIds.has(id))
 					continue;
 				seenIds.add(id);
+				persistSeen();
 				triggerAlarm();
 				return;
 			}
