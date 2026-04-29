@@ -262,4 +262,3 @@ chrome.storage.session.get(SEEN_KEY, function(res) {
 		}
 	}, 500);
 });
-}()); /* end IIFE */
