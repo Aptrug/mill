@@ -7,6 +7,10 @@ const MSG_STOP = 1;
 const MSG_NEW_POST = 2;
 
 const NOTIF_ID = "fw";
+const RELOAD_ALARM = "fwr";
+
+/* Reload interval in minutes.  0.5 = 30 s. */
+const RELOAD_PERIOD_MIN = 0.5;
 
 /* Minimum ms between alarms for the same source URL.  Deduplicates two
    tabs of the same page firing within the same instant. */
