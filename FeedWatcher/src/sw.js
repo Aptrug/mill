@@ -14,7 +14,7 @@ const COOLDOWN = 5000;
 
 /* Normalized (lowercase, no trailing slash, no query/hash) monitored URLs. */
 const MONITORED_SET = new Set([
-	"https://x.com/1337fil", "https://x.com/techinsider", "https://x.com/CNN",
+	"https://x.com/1337fil", "https://x.com/techinsider", "https://x.com/cnn",
 	"https://www.facebook.com/1337futureisloading", "https://www.facebook.com/techinsider",
 	"https://www.facebook.com/cnn"
 ]);
