@@ -191,16 +191,24 @@ function onMutation(mutations) {
 
 function initFeedMonitor(container) {
 	feedContainer = container;
-	/* Snapshot every post currently visible so we only alarm on truly
-	   new arrivals, not on posts already on screen when monitoring
-	   starts. */
 	const existing = container.querySelectorAll(POST_SEL);
 	const en = existing.length;
+	/* On first run seenIds has no persisted baseline: treat every
+	   visible post as already-seen to avoid false alarms on startup.
+	   On subsequent runs (after a SW-triggered reload) seenIds is
+	   pre-populated from session storage; any post not in it is
+	   genuinely new and triggers an alarm. */
 	for (let i = 0; i < en; i++) {
 		const id = extractId(existing[i]);
-		if (id !== null)
-			seenIds.add(id);
+		if (id === null)
+			continue;
+		if (!firstRun && !seenIds.has(id))
+			triggerAlarm();
+		seenIds.add(id);
 	}
+	if (!firstRun)
+		persistSeen();
+	firstRun = false;
 	feedObserver = new MutationObserver(onMutation);
 	feedObserver.observe(container, {childList : true, subtree : true});
 }
