@@ -1,8 +1,19 @@
 /* vim: set noet ts=8 sw=8 tw=80 : */
 
-/* Hostnames must mirror content_scripts.matches in manifest.json exactly. */
-const MATCH_HOSTS = [ "gemini.google.com", "claude.ai", "grok.com" ];
-const N_HOSTS = MATCH_HOSTS.length;
+/* Match rules mirror content_scripts.matches in manifest.json exactly.     */
+/* path: empty string means any path on that host matches.                   */
+/* pathSlash: precomputed prefix+slash used in startsWith check in urlActive. */
+function MatchRule(host, path) {
+	this.host = host;
+	this.path = path;
+	this.pathSlash = path ? path + "/" : "";
+}
+
+const MATCH_RULES = [
+	new MatchRule("gemini.google.com", ""), new MatchRule("claude.ai", ""), new MatchRule("grok.com", ""),
+	new MatchRule("x.com", "/DavidJHarrisJr"), new MatchRule("www.facebook.com", "/DavidJHarrisJr")
+];
+const N_RULES = MATCH_RULES.length;
 
 const BADGE_ON = "ON";
 const COLOR_ON = [ 0, 170, 0, 255 ];
