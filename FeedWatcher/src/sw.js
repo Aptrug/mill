@@ -160,5 +160,27 @@ async function initTabIcons() {
 	}
 }
 
-chrome.runtime.onInstalled.addListener(initTabIcons);
-chrome.runtime.onStartup.addListener(initTabIcons);
+function initAlarm() {
+	chrome.alarms.create(RELOAD_ALARM, {periodInMinutes : RELOAD_PERIOD_MIN});
+}
+
+chrome.runtime.onInstalled.addListener(function() {
+	initTabIcons();
+	initAlarm();
+});
+chrome.runtime.onStartup.addListener(function() {
+	initTabIcons();
+	initAlarm();
+});
+
+chrome.alarms.onAlarm.addListener(function(alarm) {
+	if (alarm.name !== RELOAD_ALARM)
+		return;
+	chrome.tabs.query({}, function(tabs) {
+		const n = tabs.length;
+		for (let i = 0; i < n; i++) {
+			if (tabs[i].id && tabs[i].url && isMonitored(tabs[i].url))
+				chrome.tabs.reload(tabs[i].id);
+		}
+	});
+});
