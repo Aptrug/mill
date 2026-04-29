@@ -22,6 +22,10 @@ const MONITORED_SET = new Set([
 /* Per-source last-alarm timestamp for cooldown. */
 const lastAlarm = new Map();
 
+/* True while an offscreen document is alive. Reset to false in the
+   notifications.onClosed handler after closeDocument resolves. */
+let offscreenReady = false;
+
 /* Single constructor so all send sites share one hidden class. */
 function Msg(t) {
 	this.t = t;
