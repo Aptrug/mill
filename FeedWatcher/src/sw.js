@@ -135,10 +135,13 @@ chrome.tabs.onActivated.addListener(async (info) => {
 	setTabIcon(info.tabId, isMonitored(tab.url));
 });
 
-chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
-	if (!changeInfo.url)
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+	if (changeInfo.url) {
+		setTabIcon(tabId, isMonitored(changeInfo.url));
 		return;
-	setTabIcon(tabId, isMonitored(changeInfo.url));
+	}
+	if (changeInfo.status === "complete")
+		setTabIcon(tabId, isMonitored(tab.url));
 });
 
 /* Set icon state for all open tabs when the extension installs or Chrome
