@@ -263,7 +263,7 @@ const initTimer = setInterval(function() {
 	if (feedContainer !== null || initPolls >= 60) {
 		clearInterval(initTimer);
 		setInterval(tick, 3000);
-		setInterval(clickRefreshBanner, 30000);
+		setInterval(clickRefreshBanner, 60000);
 	}
 }, 500);
 }()); /* end IIFE */
