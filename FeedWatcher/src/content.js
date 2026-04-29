@@ -51,6 +51,7 @@ const seenIds = new Set();
 
 let feedObserver = null;
 let feedContainer = null;
+let bannerObserver = null;
 
 /* ------------------------------------------------------------------ */
 /* Post ID extraction                                                   */
