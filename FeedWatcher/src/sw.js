@@ -66,14 +66,14 @@ function setTabIcon(tabId, on) {
 }
 
 async function ensureOffscreen() {
-	const ctxs = await chrome.runtime.getContexts({contextTypes : [ "OFFSCREEN_DOCUMENT" ]});
-	if (ctxs.length > 0)
+	if (offscreenReady)
 		return;
 	await chrome.offscreen.createDocument({
 		url : "offscreen.html",
 		reasons : [ "AUDIO_PLAYBACK" ],
 		justification : "Play alarm sound on new post detection"
 	});
+	offscreenReady = true;
 }
 
 async function triggerAlarm() {
