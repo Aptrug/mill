@@ -30,7 +30,6 @@ function urlActive(url) {
 	}
 	if (u.protocol !== "https:")
 		return false;
-	const h = u.pathname;
 	const p = u.pathname;
 	let i = 0;
 	while (i < N_RULES) {
