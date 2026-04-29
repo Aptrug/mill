@@ -19,10 +19,10 @@
 			"matches": [
 				"https://x.com/1337FIL*",
 				"https://x.com/TechInsider*",
-				"https://x.com/CNN*",
+				"https://x.com/DavidJHarrisJr*",
 				"https://www.facebook.com/1337FutureIsLoading*",
 				"https://www.facebook.com/TechInsider*",
-				"https://www.facebook.com/cnn*"
+				"https://www.facebook.com/DavidJHarrisJr*"
 			],
 			"js": [
 				"visibility.js"
@@ -33,10 +33,10 @@
 			"matches": [
 				"https://x.com/1337FIL*",
 				"https://x.com/TechInsider*",
-				"https://x.com/CNN*",
+				"https://x.com/DavidJHarrisJr*",
 				"https://www.facebook.com/1337FutureIsLoading*",
 				"https://www.facebook.com/TechInsider*",
-				"https://www.facebook.com/cnn*"
+				"https://www.facebook.com/DavidJHarrisJr**"
 			],
 			"js": [
 				"content.js"
