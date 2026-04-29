@@ -14,9 +14,9 @@ const COOLDOWN = 5000;
 
 /* Normalized (lowercase, no trailing slash, no query/hash) monitored URLs. */
 const MONITORED_SET = new Set([
-	"https://x.com/1337fil", "https://x.com/techinsider", "https://x.com/cnn",
+	"https://x.com/1337fil", "https://x.com/techinsider", "https://x.com/davidjharrisjr",
 	"https://www.facebook.com/1337futureisloading", "https://www.facebook.com/techinsider",
-	"https://www.facebook.com/cnn"
+	"https://www.facebook.com/davidjharrisjr"
 ]);
 
 /* Per-source last-alarm timestamp for cooldown. */
