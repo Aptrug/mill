@@ -146,9 +146,7 @@ function triggerAlarm() {
 /* Clicks the platform's "new posts" banner if present, causing it to
    flush pending posts into the feed DOM for the observer to catch. */
 function clickRefreshBanner() {
-	let btn = document.querySelector(BANNER_SEL_PRIMARY);
-	if (btn === null && BANNER_SEL_FALLBACK !== null)
-		btn = document.querySelector(BANNER_SEL_FALLBACK);
+	const btn = document.querySelector(BANNER_SEL);
 	if (btn !== null)
 		btn.click();
 }
