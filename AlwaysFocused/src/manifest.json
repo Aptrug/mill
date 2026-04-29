@@ -7,8 +7,10 @@
 	"background": {
 		"service_worker": "background.js"
 	},
-	"permissions": [
-		"tabs"
+	"host_permissions": [
+		"https://gemini.google.com/*",
+		"https://claude.ai/*",
+		"https://grok.com/*"
 	],
 	"content_scripts": [
 		{
