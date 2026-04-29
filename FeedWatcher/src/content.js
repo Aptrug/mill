@@ -234,19 +234,32 @@ function tick() {
 /* Startup polling                                                      */
 /* ------------------------------------------------------------------ */
 
-tick(); /* immediate check; page may already be rendered */
-
-let initPolls = 0;
-/* Poll at 500 ms until the container is found (max 30 s), then hand
-   off to a cheap 3-second maintenance interval that catches SPA
-   container rebuilds and tab re-navigations. */
-const initTimer = setInterval(function() {
-	initPolls++;
-	tick();
-	if (feedContainer !== null || initPolls >= 60) {
-		clearInterval(initTimer);
-		setInterval(tick, 3000);
-		setInterval(clickRefreshBanner, 60000);
+/* Restore persisted seenIds from the previous page load before starting
+   the feed monitor so the DOM scan in initFeedMonitor can distinguish
+   already-seen posts from new arrivals. */
+chrome.storage.session.get(SEEN_KEY, function(res) {
+	const stored = res[SEEN_KEY];
+	if (stored !== undefined) {
+		const n = stored.length;
+		for (let i = 0; i < n; i++)
+			seenIds.add(stored[i]);
+		/* seenIds is non-empty: this is a reload, not a cold start.
+		   firstRun stays true only when there is no persisted baseline. */
+		firstRun = false;
 	}
-}, 500);
+
+	window.addEventListener("pagehide", persistSeen);
+
+	tick(); /* immediate check; page may already be rendered */
+
+	let initPolls = 0;
+	const initTimer = setInterval(function() {
+		initPolls++;
+		tick();
+		if (feedContainer !== null || initPolls >= 60) {
+			clearInterval(initTimer);
+			setInterval(tick, 3000);
+		}
+	}, 500);
+});
 }()); /* end IIFE */
