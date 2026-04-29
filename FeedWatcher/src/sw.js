@@ -90,11 +90,23 @@ async function triggerAlarm() {
 
 /* ------------------------------------------------------------------ */
 
+chrome.runtime.onConnect.addListener((p) => {
+	p.onMessage.addListener((msg) => {
+		switch (msg.t) {
+		case MSG_NEW_POST:
+			if (checkCooldown(msg.src))
+				triggerAlarm().catch((_) => {});
+			break;
+		default:
+			break;
+		}
+	});
+});
+
 chrome.runtime.onMessage.addListener((msg) => {
 	switch (msg.t) {
-	case MSG_NEW_POST:
-		if (checkCooldown(msg.src))
-			triggerAlarm().catch((_) => {});
+	case MSG_PLAY: /* FALLTHROUGH */
+	case MSG_STOP:
 		break;
 	default:
 		break;
