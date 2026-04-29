@@ -36,6 +36,7 @@ const FEED_SEL = IS_X ? "[data-testid=\"primaryColumn\"]" : "[role=\"feed\"]";
    periodic tab reloads triggered by the SW alarm.  Scoped per profile
    so tabs monitoring different profiles do not share state. */
 const SEEN_KEY = "s:" + SRC;
+
 /* String IDs of posts already seen.  WeakSet cannot be used here:
    X virtualises its list and removes/re-inserts tweet nodes as the
    user scrolls; a WeakSet would treat each re-insertion as a new post
