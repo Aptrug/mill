@@ -12,6 +12,7 @@
 !*.xml
 !*.crx
 !*.json
+!*.html
 !*.js
 !*.lua
 !Makefile
