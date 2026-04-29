@@ -2,7 +2,7 @@
 
 /* Wrapped in an IIFE so we can use top-level return to bail out on
    pages that matched the manifest prefix but are not a monitored
-   profile root (e.g. x.com/TheVerge/status/123). */
+   profile root (e.g. x.com/cnn/status/123). */
 (function() {
 
 const DEBUG = false;
@@ -14,8 +14,8 @@ const IS_X = HOST === "x.com";
 const PATH = location.pathname.toLowerCase().replace(/\/$/, "");
 
 /* Exact profile paths we monitor, per host. */
-const X_PATHS = new Set([ "/1337fil", "/techinsider", "/theverge" ]);
-const FB_PATHS = new Set([ "/1337futureisloading", "/techinsider", "/theverge" ]);
+const X_PATHS = new Set([ "/1337fil", "/techinsider", "/cnn" ]);
+const FB_PATHS = new Set([ "/1337futureisloading", "/techinsider", "/cnn" ]);
 
 if (!(IS_X ? X_PATHS : FB_PATHS).has(PATH))
 	return;
