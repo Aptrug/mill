@@ -19,7 +19,21 @@
 			"matches": [
 				"https://x.com/1337FIL*",
 				"https://x.com/TechInsider*",
-				"https://x.com/CNN*",
+				"https://x.com/cnn*",
+				"https://www.facebook.com/1337FutureIsLoading*",
+				"https://www.facebook.com/TechInsider*",
+				"https://www.facebook.com/cnn*"
+			],
+			"js": [
+				"visibility.js"
+			],
+			"run_at": "document_start"
+		},
+		{
+			"matches": [
+				"https://x.com/1337FIL*",
+				"https://x.com/TechInsider*",
+				"https://x.com/cnn*",
 				"https://www.facebook.com/1337FutureIsLoading*",
 				"https://www.facebook.com/TechInsider*",
 				"https://www.facebook.com/cnn*"
