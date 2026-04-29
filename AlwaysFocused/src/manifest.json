@@ -3,16 +3,12 @@
 	"name": "Focus Override",
 	"version": "1.2.0",
 	"description": "Overrides visibility and focus APIs on targeted URLs.",
-	"action": {
-		"default_icon": "icon_off.png"
-	},
+	"action": {},
 	"background": {
 		"service_worker": "background.js"
 	},
-	"host_permissions": [
-		"https://gemini.google.com/*",
-		"https://claude.ai/*",
-		"https://grok.com/*"
+	"permissions": [
+		"tabs"
 	],
 	"content_scripts": [
 		{
