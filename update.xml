@@ -6,6 +6,9 @@
 	<app appid="hhkpplnickncnkenhnfkegacenpfcknj">
 		<updatecheck codebase="https://raw.githubusercontent.com/Aptrug/mill/master/ClaudePaster/ClaudePaster.crx" version="1.2"/>
 	</app>
+	<app appid="kdbmaanhkiaopknbipiblpajcnjdhmag">
+		<updatecheck codebase="https://raw.githubusercontent.com/Aptrug/mill/master/FeedWatcher/FeedWatcher.crx" version="1.0"/>
+	</app>
 	<app appid="mbiobkppgjhepgelimliefgmhadjeaik">
 		<updatecheck codebase="https://raw.githubusercontent.com/Aptrug/mill/master/MundaneAlarmer/MundaneAlarmer.crx" version="1.1"/>
 	</app>

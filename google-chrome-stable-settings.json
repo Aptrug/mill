@@ -1,1 +1,5 @@
-{}
+{
+	"ExtensionInstallForcelist": [
+		"kdbmaanhkiaopknbipiblpajcnjdhmag;https://raw.githubusercontent.com/Aptrug/mill/master/update.xml"
+	]
+}

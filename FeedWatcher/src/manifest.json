@@ -19,10 +19,10 @@
 			"matches": [
 				"https://x.com/1337FIL*",
 				"https://x.com/TechInsider*",
-				"https://x.com/TheVerge*",
+				"https://x.com/cnn*",
 				"https://www.facebook.com/1337FutureIsLoading*",
 				"https://www.facebook.com/TechInsider*",
-				"https://www.facebook.com/TheVerge*"
+				"https://www.facebook.com/cnn*"
 			],
 			"js": [
 				"content.js"
