@@ -15,5 +15,7 @@
 !*.html
 !*.js
 !*.lua
+!*.opus
+!*.png
 !Makefile
 !.gitignore
