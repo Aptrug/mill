@@ -30,11 +30,15 @@ function urlActive(url) {
 	}
 	if (u.protocol !== "https:")
 		return false;
-	const h = u.hostname;
+	const h = u.pathname;
+	const p = u.pathname;
 	let i = 0;
-	while (i < N_HOSTS) {
-		if (h === MATCH_HOSTS[i])
-			return true;
+	while (i < N_RULES) {
+		const rule = MATCH_RULES[i];
+		if (u.hostname === rule.host) {
+			if (!rule.path || p === rule.path || p.startsWith(rule.pathSlash))
+				return true;
+		}
 		++i;
 	}
 	return false;
