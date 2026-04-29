@@ -37,11 +37,11 @@ const FEED_SEL = IS_X ? "[data-testid=\"primaryColumn\"]" : "[role=\"feed\"]";
    Clicking it causes the platform to flush pending posts into the DOM,
    which the MutationObserver then catches normally.
    X:  data-testid="newTweets" is stable across redesigns.
-   FB: data-testid="new_content_available_button" is the primary target;
-       aria-label fallback covers older FB surfaces. */
-const BANNER_SEL_PRIMARY =
-	IS_X ? "[data-testid=\"newTweets\"]" : "[data-testid=\"new_content_available_button\"]";
-const BANNER_SEL_FALLBACK = IS_X ? null : "[role=\"button\"][aria-label*=\"ew post\"]";
+   FB: compound selector covers both the testid pill and the aria-label
+       button used on older surfaces; querySelector returns the first match. */
+const BANNER_SEL = IS_X
+	? "[data-testid=\"newTweets\"]"
+	: "[data-testid=\"new_content_available_button\"],[role=\"button\"][aria-label*=\"ew post\"]";
 
 /* String IDs of posts already seen.  WeakSet cannot be used here:
    X virtualises its list and removes/re-inserts tweet nodes as the
