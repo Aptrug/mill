@@ -150,27 +150,6 @@ function persistSeen() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Banner observer (document-scoped, started once at init)             */
-/* ------------------------------------------------------------------ */
-
-function onBannerMutation(mutations) {
-	const n = mutations.length;
-	for (let i = 0; i < n; i++) {
-		const added = mutations[i].addedNodes;
-		const m = added.length;
-		for (let j = 0; j < m; j++) {
-			const node = added[j];
-			if (node.nodeType !== 1)
-				continue;
-			if (node.matches(BANNER_SEL) || node.querySelector(BANNER_SEL) !== null) {
-				clickRefreshBanner();
-				return;
-			}
-		}
-	}
-}
-
-/* ------------------------------------------------------------------ */
 /* Mutation handler (hot path)                                          */
 /* ------------------------------------------------------------------ */
 
