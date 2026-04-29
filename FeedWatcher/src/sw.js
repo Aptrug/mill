@@ -106,11 +106,11 @@ chrome.action.onClicked.addListener(() => { triggerAlarm().catch((_) => {}); });
 chrome.notifications.onClosed.addListener(async (id) => {
 	if (id !== NOTIF_ID)
 		return;
-	const ctxs = await chrome.runtime.getContexts({contextTypes : [ "OFFSCREEN_DOCUMENT" ]});
-	if (ctxs.length === 0)
+	if (!offscreenReady)
 		return;
 	await chrome.runtime.sendMessage(new Msg(MSG_STOP));
-	chrome.offscreen.closeDocument();
+	await chrome.offscreen.closeDocument();
+	offscreenReady = false;
 });
 
 chrome.tabs.onActivated.addListener(async (info) => {
