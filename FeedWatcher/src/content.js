@@ -120,8 +120,16 @@ const extractId = IS_X ? extractXId : extractFBId;
 /* Alarm                                                                */
 /* ------------------------------------------------------------------ */
 
+function connectPort() {
+	port = chrome.runtime.connect();
+	port.onDisconnect.addListener(connectPort);
+}
+
+let port;
+connectPort();
+
 function triggerAlarm() {
-	chrome.runtime.sendMessage({t : MSG_NEW_POST, src : SRC}).catch((_) => {});
+	port.postMessage({t : MSG_NEW_POST, src : SRC});
 }
 
 /* ------------------------------------------------------------------ */
