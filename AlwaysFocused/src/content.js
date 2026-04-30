@@ -14,7 +14,6 @@ document.addEventListener("blur", blockEvent, true);
 window.addEventListener("mouseleave", blockEvent, true);
 document.addEventListener("mouseleave", blockEvent, true);
 
-/* Shadow built-in properties */
 Object.defineProperty(document, "visibilityState", {
 	get : function() {
 		return "visible";
