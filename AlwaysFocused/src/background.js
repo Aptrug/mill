@@ -19,14 +19,11 @@ function urlActive(url) {
 	}
 	if (u.protocol !== "https:")
 		return false;
-	const p = u.pathname;
+	const h = u.hostname;
 	let i = 0;
-	while (i < N_RULES) {
-		const rule = MATCH_RULES[i];
-		if (u.hostname === rule.host) {
-			if (!rule.path || p === rule.path || p.startsWith(rule.pathSlash))
-				return true;
-		}
+	while (i < N_HOSTS) {
+		if (h === MATCH_HOSTS[i])
+			return true;
 		++i;
 	}
 	return false;
