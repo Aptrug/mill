@@ -10,11 +10,7 @@
 	"host_permissions": [
 		"https://gemini.google.com/*",
 		"https://claude.ai/*",
-		"https://grok.com/*",
-		"https://x.com/DavidJHarrisJr",
-		"https://x.com/DavidJHarrisJr/*",
-		"https://www.facebook.com/DavidJHarrisJr",
-		"https://www.facebook.com/DavidJHarrisJr/*"
+		"https://grok.com/*"
 	],
 	"content_scripts": [
 		{
