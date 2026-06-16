@@ -5,7 +5,6 @@
 	"permissions": [
 		"activeTab",
 		"scripting",
-		"clipboardRead",
 		"declarativeContent"
 	],
 	"host_permissions": [
