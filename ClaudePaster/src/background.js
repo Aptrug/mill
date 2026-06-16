@@ -37,16 +37,10 @@ async function injectClipboardText() {
 	sel.removeAllRanges();
 	sel.addRange(range);
 
-	const CHUNK_SIZE = 500;
-	let i = 0;
+	const dt = new DataTransfer();
+	dt.setData("text/plain", text);
 
-	function insertChunk() {
-		const chunk = text.slice(i, i + CHUNK_SIZE);
-		document.execCommand("insertText", false, chunk);
-		i += CHUNK_SIZE;
-		if (i < text.length)
-			requestAnimationFrame(insertChunk);
-	}
+	const pasteEvent = new ClipboardEvent("paste", {clipboardData : dt, bubbles : true, cancelable : true});
 
-	insertChunk();
+	el.dispatchEvent(pasteEvent);
 }
