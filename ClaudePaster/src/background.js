@@ -14,117 +14,33 @@ function onInstalled() {
 	});
 }
 
-let injecting = false;
-
 function onActionClicked(tab) {
-	if (injecting)
-		return;
-	injecting = true;
-	chrome.scripting.executeScript({target : {tabId : tab.id}, world : "MAIN", func : injectClipboardText})
-		.catch(function() {})
-		.finally(function() {
-			injecting = false;
-		});
+	chrome.scripting.executeScript({target : {tabId : tab.id}, func : injectClipboardText}).catch(function() {});
 }
 
-function injectClipboardText() {
-	function findEditorView(startEl) {
-		function looksLikeView(v) {
-			return v && typeof v === "object" && typeof v.dispatch === "function" &&
-				typeof v.focus === "function" && v.state && v.state.tr && v.dom instanceof Element;
-		}
+async function injectClipboardText() {
+	const text = await navigator.clipboard.readText();
+	if (!text)
+		return;
 
-		const seen = new Set();
+	const el = (document.querySelector("div.ProseMirror[contenteditable=\"true\"]") ||
+		document.querySelector("div[contenteditable=\"true\"]"));
+	if (!el)
+		return;
 
-		function consider(value) {
-			if (!value || seen.has(value))
-				return null;
-			seen.add(value);
-			return looksLikeView(value) ? value : null;
-		}
+	el.focus();
 
-		for (let el = startEl; el; el = el.parentElement) {
-			let v = consider(el.pmViewDesc && el.pmViewDesc.view);
-			if (v)
-				return v;
+	const sel = window.getSelection();
+	const range = document.createRange();
+	range.selectNodeContents(el);
+	range.collapse(false);
+	sel.removeAllRanges();
+	sel.addRange(range);
 
-			v = consider(el.__pmViewDesc && el.__pmViewDesc.view);
-			if (v)
-				return v;
+	const dt = new DataTransfer();
+	dt.setData("text/plain", text);
 
-			let propNames;
-			try {
-				propNames = Object.getOwnPropertyNames(el);
-			} catch (e) {
-				continue;
-			}
+	const pasteEvent = new ClipboardEvent("paste", {clipboardData : dt, bubbles : true, cancelable : true});
 
-			for (const key of propNames) {
-				let value;
-				try {
-					value = el[key];
-				} catch (e) {
-					continue;
-				}
-
-				v = consider(value);
-				if (v)
-					return v;
-
-				try {
-					v = consider(value && value.view);
-					if (v)
-						return v;
-				} catch (e) {
-				}
-
-				try {
-					v = consider(value && value.pmViewDesc && value.pmViewDesc.view);
-					if (v)
-						return v;
-				} catch (e) {
-				}
-			}
-		}
-
-		return null;
-	}
-
-	navigator.clipboard.readText()
-		.then(function(text) {
-			if (!text)
-				return;
-
-			const el = (document.querySelector("div.ProseMirror[contenteditable=\"true\"]") ||
-				document.querySelector("div[contenteditable=\"true\"]"));
-			if (!el)
-				return;
-
-			const view = findEditorView(el);
-
-			if (view) {
-				view.focus();
-				const sel = view.state.selection;
-				view.dispatch(view.state.tr.insertText(text, sel.from, sel.to));
-				return;
-			}
-
-			el.focus();
-
-			const sel = window.getSelection();
-			const range = document.createRange();
-			range.selectNodeContents(el);
-			range.collapse(false);
-			sel.removeAllRanges();
-			sel.addRange(range);
-
-			const dt = new DataTransfer();
-			dt.setData("text/plain", text);
-
-			const pasteEvent =
-				new ClipboardEvent("paste", {clipboardData : dt, bubbles : true, cancelable : true});
-
-			el.dispatchEvent(pasteEvent);
-		})
-		.catch(function() {});
+	el.dispatchEvent(pasteEvent);
 }
