@@ -35,10 +35,18 @@ function injectClipboardText() {
 		}
 
 		// Confirmed on the current Claude.ai frontend: the view sits directly
-		// on the contenteditable element as el.editor.view. Check that first,
-		// since it's the real case, not a guess.
-		if (startEl.editor && looksLikeView(startEl.editor.view))
-			return startEl.editor.view;
+		// on the contenteditable element, reachable via a property named
+		// "editor" (e.g. el.editor.view). Checking a short list of plausible
+		// sibling names too, so a future rename to a near-synonym doesn't
+		// silently drop to the slower fallback for no real reason.
+		const KNOWN_PROPS = [ "editor", "_editor", "tiptapEditor", "pmEditor" ];
+		for (const prop of KNOWN_PROPS) {
+			const candidate = startEl[prop];
+			if (candidate && looksLikeView(candidate.view))
+				return candidate.view;
+			if (looksLikeView(candidate))
+				return candidate;
+		}
 
 		// Fallback only: broader scan in case a future frontend update moves
 		// this. Slower, but only runs if the direct check above misses.
