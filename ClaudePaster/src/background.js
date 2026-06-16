@@ -43,14 +43,18 @@ function injectClipboardText() {
 			return looksLikeView(value) ? value : null;
 		}
 
-		for (let el = startEl; el; el = el.parentElement) {
+		for (let el = startEl, depth = 0; el; el = el.parentElement, depth++) {
 			let v = consider(el.pmViewDesc && el.pmViewDesc.view);
-			if (v)
+			if (v) {
+				console.log("[paste-injector] view found at depth", depth, "via pmViewDesc.view");
 				return v;
+			}
 
 			v = consider(el.__pmViewDesc && el.__pmViewDesc.view);
-			if (v)
+			if (v) {
+				console.log("[paste-injector] view found at depth", depth, "via __pmViewDesc.view");
 				return v;
+			}
 
 			let propNames;
 			try {
@@ -68,26 +72,49 @@ function injectClipboardText() {
 				}
 
 				v = consider(value);
-				if (v)
+				if (v) {
+					console.log("[paste-injector] view found at depth", depth, "via property", key);
 					return v;
+				}
 
 				try {
 					v = consider(value && value.view);
-					if (v)
+					if (v) {
+						console.log("[paste-injector] view found at depth", depth, "via", key + ".view");
 						return v;
+					}
 				} catch (e) {
 				}
 
 				try {
 					v = consider(value && value.pmViewDesc && value.pmViewDesc.view);
-					if (v)
+					if (v) {
+						console.log(
+							"[paste-injector] view found at depth", depth, "via", key + ".pmViewDesc.view");
 						return v;
+					}
 				} catch (e) {
 				}
 			}
 		}
 
 		return null;
+	}
+
+	function insertViaPasteEvent(el, text) {
+		el.focus();
+
+		const sel = window.getSelection();
+		const range = document.createRange();
+		range.selectNodeContents(el);
+		range.collapse(false);
+		sel.removeAllRanges();
+		sel.addRange(range);
+
+		const dt = new DataTransfer();
+		dt.setData("text/plain", text);
+
+		el.dispatchEvent(new ClipboardEvent("paste", {clipboardData : dt, bubbles : true, cancelable : true}));
 	}
 
 	navigator.clipboard.readText()
@@ -109,22 +136,7 @@ function injectClipboardText() {
 				return;
 			}
 
-			el.focus();
-
-			const sel = window.getSelection();
-			const range = document.createRange();
-			range.selectNodeContents(el);
-			range.collapse(false);
-			sel.removeAllRanges();
-			sel.addRange(range);
-
-			const dt = new DataTransfer();
-			dt.setData("text/plain", text);
-
-			const pasteEvent =
-				new ClipboardEvent("paste", {clipboardData : dt, bubbles : true, cancelable : true});
-
-			el.dispatchEvent(pasteEvent);
+			insertViaPasteEvent(el, text);
 		})
 		.catch(function() {});
 }
