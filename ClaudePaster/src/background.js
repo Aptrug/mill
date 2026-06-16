@@ -37,5 +37,16 @@ async function injectClipboardText() {
 	sel.removeAllRanges();
 	sel.addRange(range);
 
-	document.execCommand("insertText", false, text);
+	const CHUNK_SIZE = 500;
+	let i = 0;
+
+	function insertChunk() {
+		const chunk = text.slice(i, i + CHUNK_SIZE);
+		document.execCommand("insertText", false, chunk);
+		i += CHUNK_SIZE;
+		if (i < text.length)
+			requestAnimationFrame(insertChunk);
+	}
+
+	insertChunk();
 }
