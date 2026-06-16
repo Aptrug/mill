@@ -103,6 +103,7 @@ function injectClipboardText() {
 			const view = findEditorView(el);
 
 			if (view) {
+				console.log("[paste-injector] fast path: direct transaction");
 				view.focus();
 				const sel = view.state.selection;
 				view.dispatch(view.state.tr.insertText(text, sel.from, sel.to));
