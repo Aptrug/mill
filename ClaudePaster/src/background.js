@@ -34,6 +34,14 @@ function injectClipboardText() {
 				typeof v.focus === "function" && v.state && v.state.tr && v.dom instanceof Element;
 		}
 
+		// Confirmed on the current Claude.ai frontend: the view sits directly
+		// on the contenteditable element as el.editor.view. Check that first,
+		// since it's the real case, not a guess.
+		if (startEl.editor && looksLikeView(startEl.editor.view))
+			return startEl.editor.view;
+
+		// Fallback only: broader scan in case a future frontend update moves
+		// this. Slower, but only runs if the direct check above misses.
 		const seen = new Set();
 
 		function consider(value) {
@@ -43,18 +51,14 @@ function injectClipboardText() {
 			return looksLikeView(value) ? value : null;
 		}
 
-		for (let el = startEl, depth = 0; el; el = el.parentElement, depth++) {
+		for (let el = startEl; el; el = el.parentElement) {
 			let v = consider(el.pmViewDesc && el.pmViewDesc.view);
-			if (v) {
-				console.log("[paste-injector] view found at depth", depth, "via pmViewDesc.view");
+			if (v)
 				return v;
-			}
 
 			v = consider(el.__pmViewDesc && el.__pmViewDesc.view);
-			if (v) {
-				console.log("[paste-injector] view found at depth", depth, "via __pmViewDesc.view");
+			if (v)
 				return v;
-			}
 
 			let propNames;
 			try {
@@ -72,27 +76,20 @@ function injectClipboardText() {
 				}
 
 				v = consider(value);
-				if (v) {
-					console.log("[paste-injector] view found at depth", depth, "via property", key);
+				if (v)
 					return v;
-				}
 
 				try {
 					v = consider(value && value.view);
-					if (v) {
-						console.log("[paste-injector] view found at depth", depth, "via", key + ".view");
+					if (v)
 						return v;
-					}
 				} catch (e) {
 				}
 
 				try {
 					v = consider(value && value.pmViewDesc && value.pmViewDesc.view);
-					if (v) {
-						console.log(
-							"[paste-injector] view found at depth", depth, "via", key + ".pmViewDesc.view");
+					if (v)
 						return v;
-					}
 				} catch (e) {
 				}
 			}
