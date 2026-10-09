@@ -1,7 +1,7 @@
 {
 	"manifest_version": 3,
 	"name": "f95zone rating sorter",
-	"version": "1.5",
+	"version": "1.6",
 	"description": "Sorts games by rating, then by views if ratings are equal",
 	"content_scripts": [
 		{
