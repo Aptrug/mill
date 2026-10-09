@@ -8,7 +8,7 @@ const config = {
 	viewsSelector : ".resource-tile_info-meta_views",
 	hoverClass : "resource-tile-hover", // Hover class used by the site
 	observerConfig : {childList : true, subtree : false},
-	debounceTime : 50
+	debounceTime : 300
 };
 
 let container = null;
@@ -101,7 +101,7 @@ function initialize() {
 		setTimeout(() => {
 			sortGames();
 			initObserver();
-		}, 100);
+		}, 1000);
 	} else {
 		setTimeout(initialize, 500);
 	}
