@@ -1,111 +1,64 @@
 (function() {
 "use strict";
 
-// Configuration
 const config = {
-	containerSelector : "#latest-page_items-wrap_inner",
-	ratingSelector : ".resource-tile_info-meta_rating",
-	viewsSelector : ".resource-tile_info-meta_views",
-	hoverClass : "resource-tile-hover", // Hover class used by the site
-	observerConfig : {childList : true, subtree : false},
+	containerSelector : ".list-grid",
+	ratingSelector : ".lrow__rating",
+	followsSelector : ".lrow__follows",
 	debounceTime : 50
 };
 
-let container = null;
-let observer = null;
 let debounceTimer = null;
-let isSorting = false;
 
-function parseViews(viewsText) {
-	const num = parseFloat(viewsText.replace(/[^\d.]/g, ""));
-	if (viewsText.includes("K"))
+function parseCount(text) {
+	const num = parseFloat(text.replace(/[^\d.]/g, ""));
+	if (text.includes("K"))
 		return num * 1000;
-	if (viewsText.includes("M"))
+	if (text.includes("M"))
 		return num * 1000000;
 	return num || 0;
 }
 
-function getGameMetrics(element) {
-	const ratingElement = element.querySelector(config.ratingSelector);
-	const viewsElement = element.querySelector(config.viewsSelector);
+function getMetrics(element) {
+	const rating = element.querySelector(config.ratingSelector);
+	const follows = element.querySelector(config.followsSelector);
 
-	if (!ratingElement || !viewsElement)
-		return null;
+	return {
+		element,
+		rating : rating ? parseFloat(rating.textContent) || 0 : 0,
+		follows : follows ? parseCount(follows.textContent) : 0
+	};
+}
 
-	return {rating : parseFloat(ratingElement.textContent) || 0, views : parseViews(viewsElement.textContent)};
+// Only act on /browse?...sort=score:desc (URLSearchParams decodes %3A to ":")
+function shouldSort() {
+	const params = new URLSearchParams(location.search);
+	return location.pathname.startsWith("/browse") && params.get("sort") === "score:desc";
 }
 
 function sortGames() {
-	if (!container || isSorting || !location.hash.includes("/sort=rating"))
+	if (!shouldSort())
 		return;
-	isSorting = true;
 
-	// Temporarily disable hover effects during sorting
-	const style = document.createElement("style");
-	style.textContent = `
-            .${config.hoverClass} {
-                transition: none !important;
-                animation: none !important;
-            }
-        `;
-	document.head.appendChild(style);
+	const container = document.querySelector(config.containerSelector);
+	if (!container)
+		return;
 
-	const validGames = [];
-	Array.from(container.children).forEach(game => {
-		const metrics = getGameMetrics(game);
-		if (metrics)
-			validGames.push({element : game, ...metrics});
-	});
+	const games = Array.from(container.children).map(getMetrics);
+	const sorted = [...games ].sort((a, b) => b.rating - a.rating || b.follows - a.follows);
 
-	validGames.sort((a, b) => {
-		const ratingDiff = b.rating - a.rating;
-		return ratingDiff !== 0 ? ratingDiff : b.views - a.views;
-	});
+	// Already in order: leave the DOM alone so we don't retrigger the observer
+	if (sorted.every((g, i) => g.element === games[i].element))
+		return;
 
-	requestAnimationFrame(() => {
-		const fragment = document.createDocumentFragment();
-		validGames.forEach(g => fragment.appendChild(g.element));
-
-		container.innerHTML = "";
-		container.appendChild(fragment);
-
-		setTimeout(() => {
-			style.remove();
-			isSorting = false;
-		}, 100);
-	});
+	container.append(...sorted.map(g => g.element));
 }
 
-function debouncedSort() {
+// The site is a SPA: watch the whole body so we survive navigation and re-renders
+new MutationObserver(() => {
 	clearTimeout(debounceTimer);
 	debounceTimer = setTimeout(sortGames, config.debounceTime);
-}
+}).observe(document.body, {childList : true, subtree : true});
 
-function initObserver() {
-	if (observer)
-		observer.disconnect();
-
-	observer = new MutationObserver(() => {
-		if (!isSorting)
-			debouncedSort();
-	});
-
-	if (container)
-		observer.observe(container, config.observerConfig);
-}
-
-function initialize() {
-	container = document.querySelector(config.containerSelector);
-	if (container) {
-		// Wait for initial hover states to settle
-		setTimeout(() => {
-			sortGames();
-			initObserver();
-		}, 100);
-	} else {
-		setTimeout(initialize, 500);
-	}
-}
-
-initialize();
+sortGames();
 })();
