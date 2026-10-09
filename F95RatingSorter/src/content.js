@@ -101,7 +101,7 @@ function initialize() {
 		setTimeout(() => {
 			sortGames();
 			initObserver();
-		}, 1000);
+		}, 100);
 	} else {
 		setTimeout(initialize, 500);
 	}
