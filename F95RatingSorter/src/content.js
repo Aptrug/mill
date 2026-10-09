@@ -36,7 +36,6 @@ function getGameMetrics(element) {
 }
 
 function sortGames() {
-	console.log("sortGames", location.hash);
 	if (!container || isSorting || !location.hash.includes("/sort=rating"))
 		return;
 	isSorting = true;
