@@ -1,0 +1,17 @@
+{
+	"manifest_version": 3,
+	"name": "Comix Rating Sort",
+	"version": "1.0.0",
+	"description": "Sorts browse results by rating, then by follows if ratings are equal",
+	"content_scripts": [
+		{
+			"matches": [
+				"https://comix.to/*"
+			],
+			"js": [
+				"content.js"
+			],
+			"run_at": "document_idle"
+		}
+	]
+}
