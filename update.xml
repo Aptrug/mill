@@ -3,6 +3,9 @@
 	<app appid="hhkpplnickncnkenhnfkegacenpfcknj">
 		<updatecheck codebase="https://raw.githubusercontent.com/Aptrug/mill/master/ClaudePaster/ClaudePaster.crx" version="1.3"/>
 	</app>
+	<app appid="ckdhlbmecopipfofgdgcnkaflaigfgha">
+		<updatecheck codebase="https://raw.githubusercontent.com/Aptrug/mill/master/ComixRatingSorter/ComixRatingSorter.crx" version="1.0.0"/>
+	</app>
 	<app appid="ljfllieddkhnklholfpnmknkeaaghlie">
 		<updatecheck codebase="https://raw.githubusercontent.com/Aptrug/mill/master/F95RatingSorter/F95RatingSorter.crx" version="1.6"/>
 	</app>
